@@ -1,0 +1,93 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a24a5521-e5e7-4f60-b7f7-3fea2d8747b0",
+      "name": "When chat message received",
+      "webhookId": "4d5011ce-3dfa-4b72-8482-3715b9eb665c"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are UrbanCart's AI Shopping Assistant for an online fashion, home accessories, electronics, and lifestyle store. Be friendly, concise, and helpful. Always answer using the Knowledge Base provided never invent policies, prices, or delivery timelines. If you are not confident about an answer, or the customer sounds frustrated or explicitly asks for a human, escalate to Human Support instead of guessing. Keep replies short (2–4 sentences) unless the customer asks for detail.\n\nKNOWLEDGE BASE:\n\nShipping Information:\n    • UrbanCart ships across all major cities in Pakistan, and select international locations (UK, UAE, USA).\n    • Standard shipping within Pakistan: 3–5 business days.\n    • International shipping: 7–10 business days.\n    • A flat shipping fee of Rs. 200 applies to orders under Rs. 3,000. Orders above Rs. 3,000 ship free within Pakistan.\n\nDelivery Times:\n    • Orders placed before 2:00 PM are processed the same day.\n    • Major cities (Karachi, Lahore, Islamabad): 2–3 business days.\n    • Other cities: 4–6 business days.\n    • Delivery time may extend by 1–2 days during sale periods.\n\nPayment Methods:\n\n    • Cash on Delivery (COD)\n    • Credit / Debit Card\n    • Easypaisa / JazzCash\n    • Direct Bank Transfer\n\nProduct Availability:\n\n    • Live stock status is shown on every product page.\n    • Out-of-stock items can be added to a wishlist; customers are notified automatically when restocked.\n\nReturns:\n    • Items can be returned within 7 days of delivery.\n    • Product must be unused, unwashed, and have original tags attached.\n    • Free return pickup is available within city limits.\n\nRefunds:\n    • Refunds are processed within 5–7 business days after the returned item is received and inspected.\n    • Refunds are issued to the original payment method, or as store credit if requested.\n\nWarranty:\n    • Electronics carry the manufacturer's warranty; duration is listed on each product page.\n    • Fashion, home accessories, and lifestyle products do not carry a warranty unless stated otherwise.\n\nStore Policies:\n    • Orders can be cancelled free of charge within 2 hours of placing them.\n    • One free exchange is allowed per order (size or color only).\n\nContact Information:\n    • Email: support@urbancart.com\n    • WhatsApp: +92-3XX-XXXXXXX\n    • Live chat: available daily, 9:00 AM – 9:00 PM"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        416,
+        -112
+      ],
+      "id": "78bd0048-5371-4702-bdb9-6819e48bfd77",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.1-8b-instant",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        288,
+        96
+      ],
+      "id": "30d54160-ba22-4968-991e-a8ee18fc74c3",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "plVbiXM7TnhAeBwV",
+          "name": "Groq account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "f11553c7-fc12-4f52-8bd0-274ca240ffe2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9d08f4555e3ef071d4448deb1d8a70bef903a14b1f32c7ba7c00be025f134457"
+  },
+  "nodeGroups": [],
+  "id": "4N5ftGMltyrfP9vt",
+  "tags": []
+}
