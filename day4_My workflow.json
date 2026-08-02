@@ -1,0 +1,238 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a24a5521-e5e7-4f60-b7f7-3fea2d8747b0",
+      "name": "When chat message received",
+      "webhookId": "4d5011ce-3dfa-4b72-8482-3715b9eb665c"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "ASSISTANT IDENTITY:\nYour name is UrbanCart AI. Always write your name in English/Latin script exactly as \"UrbanCart AI\" — regardless of what language you are responding in. Never transliterate your name into another script.\n\nLANGUAGE & TERMINOLOGY INSTRUCTIONS:\nAlways respond in the same language the customer uses. However, follow this rule in every language: never phonetically transliterate an English word into another script (for example, do not write English words spelled out in Urdu, Arabic, or any other script just to \"sound\" like the language — this creates confusing, meaningless text). Instead, for any English term, do one of the following:\n1. Use the correct native-language word or phrase that conveys the same meaning (e.g., in Urdu, say \"معاون\" or a natural equivalent instead of transliterating \"Assistant\").\n2. If no clean native equivalent exists, or the term is a proper noun/brand name/technical term, keep it written in its original English/Latin spelling embedded directly within the sentence, rather than transliterating it into the local script.\nThis rule applies to all languages, not just Urdu. Your own name (\"Sana\") always stays in English/Latin script under all circumstances, in every language. \nNever insert characters or words from a script/language that is different from both English and the language you are currently responding in (e.g., do not insert Chinese, Arabic-only, or any unrelated script characters into an Urdu or English response). If you are unsure of the correct native word, prefer using the plain English word directly rather than risking an incorrect or foreign-script substitution. Keep Urdu responses in simple, natural, everyday Urdu phrasing — avoid overly formal or awkward constructions.\n\nYou are UrbanCart's AI Shopping Assistant for an online fashion, home accessories, electronics, and lifestyle store. Be friendly, concise, and helpful. Always answer using the Knowledge Base provided never invent policies, prices, or delivery timelines. If you are not confident about an answer, or the customer sounds frustrated or explicitly asks for a human, escalate to Human Support instead of guessing. Keep replies short (2–4 sentences) unless the customer asks for detail.\n\nKNOWLEDGE BASE:\nShipping Information:\n    • UrbanCart ships across all major cities in Pakistan, and select international locations (UK, UAE, USA).\n    • Standard shipping within Pakistan: 3–5 business days.\n    • International shipping: 7–10 business days.\n    • A flat shipping fee of Rs. 200 applies to orders under Rs. 3,000. Orders above Rs. 3,000 ship free within Pakistan.\n\nDelivery Times:\n    • Orders placed before 2:00 PM are processed the same day.\n    • Major cities (Karachi, Lahore, Islamabad): 2–3 business days.\n    • Other cities: 4–6 business days.\n    • Delivery time may extend by 1–2 days during sale periods.\n\nPayment Methods:\n\n    • Cash on Delivery (COD)\n    • Credit / Debit Card\n    • Easypaisa / JazzCash\n    • Direct Bank Transfer\n\nProduct Availability:\n\n    • Live stock status is shown on every product page.\n    • Out-of-stock items can be added to a wishlist; customers are notified automatically when restocked.\n\nReturns:\n    • Items can be returned within 7 days of delivery.\n    • Product must be unused, unwashed, and have original tags attached.\n    • Free return pickup is available within city limits.\n\nRefunds:\n    • Refunds are processed within 5–7 business days after the returned item is received and inspected.\n    • Refunds are issued to the original payment method, or as store credit if requested.\n\nWarranty:\n    • Electronics carry the manufacturer's warranty; duration is listed on each product page.\n    • Fashion, home accessories, and lifestyle products do not carry a warranty unless stated otherwise.\n\nStore Policies:\n    • Orders can be cancelled free of charge within 2 hours of placing them.\n    • One free exchange is allowed per order (size or color only).\n\nContact Information:\n    • Email: support@urbancart.com\n    • WhatsApp: +92-3XX-XXXXXXX\n    • Live chat: available daily, 9:00 AM – 9:00 PM\n\nPRODUCT CATALOG:\n1. Casual Cotton T-Shirt — Rs. 1,500 — Category: Fashion, Casual.\n2. Formal Shirt — Rs. 2,800 — Category: Fashion, Formal.\n3. Wireless Earbuds — Rs. 4,500 — Category: Electronics.\n4. Smart Watch — Rs. 8,000 — Category: Electronics.\n5. Ceramic Dinner Set — Rs. 3,200 — Category: Home Accessories.\n6. Scented Candles (Set of 3) — Rs. 900 — Category: Home Accessories, Lifestyle.\n\nPRODUCT RECOMMENDATION INSTRUCTIONS:\nWhen a customer asks for product recommendations, ask their category preference and budget if not mentioned. Recommend ONLY products that exist verbatim in the catalog above — never mention, imply the existence of, or invent any product name, category, or price not explicitly listed. Match products strictly by their listed Category field, not by loose interpretation. If fewer than 3 matching products exist, recommend only the exact matches (even if that means just 1 product, or none) — do not substitute or fabricate items to fill the list. If no catalog product matches the request, say so honestly and ask if they'd like to see the full catalog instead. Match strictly by the exact category term the customer uses. If a customer asks for \"casual\" items, recommend ONLY products whose Category field literally contains the word \"Casual\" — do not include items from other categories (like Home Accessories or Lifestyle) even if they seem loosely related or informally \"casual\" in tone.\n\nORDER TRACKING INSTRUCTIONS:\nYou have access to a Google Sheets tool that contains the store's order records (OrderID, Email, Status, EstimatedDelivery). When a customer wants to track an order, ask for their Order ID if they haven't given it, then use the connected Google Sheets tool to look up the order. Search the returned records for the row where the OrderID matches the one the customer provided, and tell them the Status and EstimatedDelivery. Never guess or invent an order status — always check the tool first. If no matching Order ID is found in the results, tell the customer honestly you couldn't find that order and suggest they double-check the ID or contact support.\n\nCRM INTEGRATION INSTRUCTIONS:\nYou have access to a second Google Sheets tool that logs conversations for the store's CRM. After every customer interaction where you provide useful information (FAQ answer, product recommendation, or order status), use this tool to log the conversation. Fill in: Timestamp (current date/time), CustomerMessage (what the customer asked), AIResponse (a brief summary of what you told them), and Topic (one of: FAQ, Product Recommendation, Order Tracking, Return/Refund, Other). Do this silently in the background — never mention to the customer that you are logging their conversation.\nThis CRM logging step is MANDATORY and must happen after every single customer message, with no exceptions — even if you already used another tool (like order tracking) in the same turn. Logging to CRM is always your final action before ending your turn, regardless of what else you did.\n\nIMPORTANT: When using any tool (including the CRM logging tool), never show the raw function call syntax, tool names, or code-like text in your reply to the customer. The customer should only ever see your natural, conversational response — all tool usage must happen silently and invisibly in the background.",
+          "maxIterations": 20
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        416,
+        -112
+      ],
+      "id": "78bd0048-5371-4702-bdb9-6819e48bfd77",
+      "name": "AI Agent",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        288,
+        96
+      ],
+      "id": "30d54160-ba22-4968-991e-a8ee18fc74c3",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "plVbiXM7TnhAeBwV",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ft8T_dQOG-uPSUlbYXvX1SVAHaGbSotzMc7ggk2t6VQ",
+          "mode": "list",
+          "cachedResultName": "UrbanCart Orders",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ft8T_dQOG-uPSUlbYXvX1SVAHaGbSotzMc7ggk2t6VQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1068990891,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ft8T_dQOG-uPSUlbYXvX1SVAHaGbSotzMc7ggk2t6VQ/edit#gid=1068990891"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        576,
+        96
+      ],
+      "id": "18731dd8-e72f-4db9-b999-8336e3638124",
+      "name": "Track_Order_Status",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "IwVFMCGFP84cb6X7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1CFJuYdNzX9uJociITpPjh-XVv1R5g2griGxLME-AA9E",
+          "mode": "list",
+          "cachedResultName": "UrbanCart CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CFJuYdNzX9uJociITpPjh-XVv1R5g2griGxLME-AA9E/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CFJuYdNzX9uJociITpPjh-XVv1R5g2griGxLME-AA9E/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "CustomerMessage": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CustomerMessage', ``, 'string') }}",
+            "AIResponse": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('AIResponse', ``, 'string') }}",
+            "Topic": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Topic', ``, 'string') }}",
+            "Timestamp": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CustomerMessage",
+              "displayName": "CustomerMessage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "AIResponse",
+              "displayName": "AIResponse",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Topic",
+              "displayName": "Topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        672,
+        64
+      ],
+      "id": "090421ac-bbd4-49e8-9c4f-c55e083c7218",
+      "name": "Log_Conversation_To_CRM",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "IwVFMCGFP84cb6X7",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Track_Order_Status": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log_Conversation_To_CRM": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "a1d05f78-24c1-4b40-a7b1-a39a6d1bbbca",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9d08f4555e3ef071d4448deb1d8a70bef903a14b1f32c7ba7c00be025f134457"
+  },
+  "nodeGroups": [],
+  "id": "4N5ftGMltyrfP9vt",
+  "tags": []
+}
